@@ -18,7 +18,9 @@ was being hovered on.
 
 ##Feedback
 
-Version 1 Feedback (height vs HR, colored by handedness): Jorge: Graph looks good. There is obviously a bell curve to the data
+Version 1 Feedback (height vs HR, colored by handedness): 
+
+Jorge: Graph looks good. There is obviously a bell curve to the data
 when presented with all players and height vs. HR. It is hard to see if that bell curve shifts as you go through the handedness
 of the player. Perhaps adding a bell curve would help to show that.
 
@@ -30,6 +32,8 @@ Version 2 Feedback (height vs weight, colored by handedness, bubble size by HR):
 In a reasonably fit athlete, height and weight are going to be colinear. Number of home runs may be somewhat correlated with
 time, but even then would be interesting to track. Did you look at the data in Excel or R? They may help with testing for colinearity.
 From a look and feel point of view, the program worked fine and the dots showed well on both the computer and my phone.
+
+Updates for Version 3: Added the coloring changes to the bubble when hovered over.  Adjusted the data to convert B,R,L to Both, Right, Left.  Converted the text at the top into bullet points for quicker conveyance of information.
 
 ##Resources
 
