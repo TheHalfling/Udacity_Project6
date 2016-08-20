@@ -58,7 +58,7 @@
 		x.title = "Height in inches";
         var y = myChart.addMeasureAxis("y", "Weight");
 		y.addOrderRule("Weight", false);
-		y.overrideMin = 140;
+		y.overrideMin = 130;
 		y.title = "Weight in pounds";
 		var z = myChart.addMeasureAxis("z", "HR")
         var s = myChart.addSeries(["Name","Handedness"], dimple.plot.bubble);
@@ -118,14 +118,15 @@
     </script>
 </head>
 <body>
-	<h2>Professional Baseball Players with 50 or more Home Runs</h2>
+	<h2>Investigation of Professional Baseball Players with 50 or more Homeruns</h2>
 	<p>
-	The visualization below shows the height, weight and Home Run record for players.
-	<ul>
-	<li>Each bubble in the chart represents an individual player</li>
-	<li>The size of the bubble relates to their number of home runs</li>
-	<li>Bubble is color coded based on the handedness (left/right/both) of the player</li>
-	</ul>
+	Does a baseball players height, weight or handedness influence the number
+	of homeruns they have achieved in their career?
+	<br></br>
+	The graphic below shows how height and weight relate to the player's Home Run record.  
+	Each bubble in the chart represents an individual player and the size of the bubble relates to
+	their number of home runs.  Each bubble is color coded based on the handedness of the player 
+	and the legend can be used to filter the information.
 	</p>
 	
 	

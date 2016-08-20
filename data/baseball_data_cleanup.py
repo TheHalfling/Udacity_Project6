@@ -21,15 +21,23 @@ f = open("Baseball_data_original.csv", 'rt')
 try:
     reader = csv.DictReader(f)
     for row in reader:
-        datatable.append(row)
+        if int(row['HR']) > 199:
+            h = row['Handedness']
+            if h == 'B':
+                row['Handedness'] = 'Both'
+            elif h == 'R':
+                row['Handedness'] = 'Right'
+            elif h == 'L':
+                row['Handedness'] = 'Left'
+            datatable.append(row)
 finally:
     f.close()
 
 df = pandas.DataFrame(datatable)
 
-df = df[df.HR != '0']
+#df = df[df.HR >= 50]
 
-print df
+#print df
     
 #keys = df[0].keys()
 

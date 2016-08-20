@@ -2,7 +2,14 @@
 		
 h2 {
 	text-align: center;
-	font-size: 14pt;
+	font-size: 12pt;
+	text-decoration: bold;
+}
+
+h3 {
+	text-align: center;
+	font-size: 10pt;
+	
 }
 		
 body {
@@ -14,7 +21,11 @@ body {
 	rotate: none;
 }
 
-.dimple-bar:hover {
+.dimple-bubble:hover {
 	fill: #340038;
 	border-color: #340038;
+}
+
+.dimple-title {
+	font-size: 12pt;
 }
