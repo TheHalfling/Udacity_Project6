@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<script src="http://d3js.org/d3.v3.min.js"></script>
+	<script src="http://dimplejs.org/dist/dimple.v2.0.0.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="css/dimple_stylesheet.css">
+	
+	<script type="text/javascript">
+		function draw(data) {
+      
+		/*
+        D3.js setup code
+		*/
+
+        "use strict";
+        var margin = 25,
+            width = 1300 - margin,
+            height = 725 - margin;
+		d3.select('body')
+			.append('h2')
+			.text("Home Runs by Player Height");
+        var svg = d3.select("body")
+            .append("svg")
+            .attr("width", width + margin)
+            .attr("height", height + margin)
+            .append('g')
+            .attr('class','chart')
+
+        /*
+        Dimple.js Chart construction code
+        */
+		
+		/*
+		Interactive legend from 
+		http://dimplejs.org/advanced_examples_viewer.html?id=advanced_interactive_legends
+		*/
+
+        var myChart = new dimple.chart(svg, data);
+        var x = myChart.addCategoryAxis("x", "Height");
+		x.addOrderRule("Height", false);		
+        myChart.addMeasureAxis("y", "HR");
+        var s = myChart.addSeries(["Name", "Handedness"], dimple.plot.bubble);
+		s.stacked = false;
+		var myLegend = myChart.addLegend(230, 20, 300, 10, "Right");
+        myChart.draw();
+		
+		//This orphans the legend from the graph updates to 
+		//keep it from resetting the choice
+		myChart.legends = [];
+		
+		//Create block for legend title
+		svg.selectAll("title-text")
+			.data(["Click legend to show/hide handedness:"])
+			.enter()
+			.append("text")
+				.attr("x", 325)
+				.attr("y", 10)
+				.text(function (d) { return d; });
+		
+		
+		//Get Handedness values for filtering
+		var filterValues = dimple.getUniqueValues(data, "Handedness");
+		
+		//Get all the rects from the legend
+		myLegend.shapes.selectAll("rect")
+		
+			//Add a click event to each rect in the legend
+			.on("click", function (e) {
+			var hide = false;
+			var newFilters = [];
+			
+			filterValues.forEach(function (f) {
+				if (f === e.aggField.slice(-1)[0]) {
+					hide = true;
+				} else {
+					newFilters.push(f);
+				}
+			});
+			if (hide) {
+				d3.select(this).style("opacity", 0.2);
+			} else {
+				newFilters.push(e.aggField.slice(-1)[0]);
+				d3.select(this).style("opacity", 0.8);
+			}
+			//Update the filters
+			filterValues = newFilters;
+			
+			//Filter the data
+			myChart.data = dimple.filterData(data, "Handedness", filterValues);
+			
+			myChart.draw(800)
+			});
+			
+
+		};
+		
+    </script>
+</head>
+<body>
+    <script type="text/javascript">
+    /*
+    Use D3 (not dimple.js) to load the TSV file
+    and pass the contents of it to the draw function
+    */
+    d3.csv("data/Baseball_data_updated.csv", draw);
+    </script>
+</body>
+</html>
