@@ -16,6 +16,8 @@ The next addition to the chart was some flavor text to introduce the visualizati
 the interactive legend, and setting the bubbles on the chart to change color when hovered over to make it clear which point 
 was being hovered on.
 
+Added the coloring changes to the bubble when hovered over.  Adjusted the data to convert B,R,L to Both, Right, Left.  Converted the text at the top into bullet points for quicker conveyance of information.
+
 ##Feedback
 
 Version 1 Feedback (height vs HR, colored by handedness): 
@@ -33,7 +35,6 @@ In a reasonably fit athlete, height and weight are going to be colinear. Number 
 time, but even then would be interesting to track. Did you look at the data in Excel or R? They may help with testing for colinearity.
 From a look and feel point of view, the program worked fine and the dots showed well on both the computer and my phone.
 
-Updates for Version 3: Added the coloring changes to the bubble when hovered over.  Adjusted the data to convert B,R,L to Both, Right, Left.  Converted the text at the top into bullet points for quicker conveyance of information.
 
 ##Resources
 
