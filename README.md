@@ -6,6 +6,9 @@ This visualization shows baseball player statistics by charting their weight vs 
 The resulting bubbles are sized based on the number of careers the player made during their career and colored 
 based on the handedness of the player. I included an interactive legend for the handedness to allow the user to filter the data.
 
+The user of this visualization will notice that most players fall roughly towards the linear relationship between height and weight
+that is standard to the world.  There are, however, a few players that fall outside this range.  It does appear that there is a small advantage to being slightly heavier and on the taller side when looking to increase your career home run count.
+
 ##Design
 
 The original design actually plotted height versus number of home runs, but still included the interactive legend 
