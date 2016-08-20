@@ -21,7 +21,7 @@ f = open("Baseball_data_original.csv", 'rt')
 try:
     reader = csv.DictReader(f)
     for row in reader:
-        if int(row['HR']) > 199:
+        if int(row['HR']) > 49:
             h = row['Handedness']
             if h == 'B':
                 row['Handedness'] = 'Both'
