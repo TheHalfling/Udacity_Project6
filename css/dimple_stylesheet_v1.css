@@ -1,0 +1,24 @@
+
+		
+h2 {
+	text-align: center;
+	font-size: 12pt;
+	text-decoration: bold;
+}
+
+h3 {
+	text-align: center;
+	font-size: 10pt;
+	
+}
+		
+body {
+	width: 960px ;
+	height: 500px;
+}
+
+.tick {
+	rotate: none;
+}
+
+}
