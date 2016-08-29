@@ -9,124 +9,119 @@
 	<script type="text/javascript">
 		function draw(data) {
       
-		/*
-        D3.js setup code
-		*/
-
-        "use strict";
-        var margin = 25,
-            width = 1300 - margin,
-            height = 725 - margin;
+			/*
+			D3.js setup code
+			*/
 			
-		d3.select('body')
-			.append('h2')
-			.text("Baseball Players - BMI vs Homeruns");
+			"use strict";
+			var margin = 25,
+				width = 1300 - margin,
+				height = 725 - margin;
+				
+			d3.select('body')
+				.append('h2')
+				.text("Baseball Players - BMI vs Homeruns");
+				
+			var svg = d3.select("body")
+				.append("svg")
+				.attr("width", width + margin)
+				.attr("height", height + margin)
+				.append('g')
+				.attr('class','chart');
+			/*
+			Dimple.js Chart construction code
+			*/
 			
-        var svg = d3.select("body")
-            .append("svg")
-            .attr("width", width + margin)
-            .attr("height", height + margin)
-            .append('g')
-            .attr('class','chart');
+			/*
+			Interactive legend from 
+			http://dimplejs.org/advanced_examples_viewer.html?id=advanced_interactive_legends
+			*/
+			
+			/*
+			Reset bounds from
+			https://github.com/PMSI-AlignAlytics/dimple/wiki/dimple.axis#ticks
+			*/
+			
+			/*
+			Bubble sizing from
+			http://lornajane.net/posts/2013/dimplejs-bubblescatterplots-and-joind-in-data
+			*/
+			
+			/*
+			Title renaming
+			http://stackoverflow.com/questions/23291200/dimple-js-how-can-i-change-the-labels-of-a-chart-axis-without-changing-the-data
+			*/
+			
+			var myChart = new dimple.chart(svg, data);
 
-        /*
-        Dimple.js Chart construction code
-        */
-		
-		/*
-		Interactive legend from 
-		http://dimplejs.org/advanced_examples_viewer.html?id=advanced_interactive_legends
-		*/
-		
-		/*
-		Reset bounds from
-		https://github.com/PMSI-AlignAlytics/dimple/wiki/dimple.axis#ticks
-		*/
-		
-		/*
-		Bubble sizing from
-		http://lornajane.net/posts/2013/dimplejs-bubblescatterplots-and-joind-in-data
-		*/
-		
-		/*
-		Title renaming
-		http://stackoverflow.com/questions/23291200/dimple-js-how-can-i-change-the-labels-of-a-chart-axis-without-changing-the-data
-		*/
-
-        var myChart = new dimple.chart(svg, data);
-		
-        var x = myChart.addMeasureAxis("x", "HR");
-		x.addOrderRule("HR", false);
-		x.overrideMin = 50;	
-		//x.tickvalues = 50;
-		x.title = "Player Number of Home Runs";
-		
-        var y = myChart.addMeasureAxis("y", "BMI");
-		y.addOrderRule("BMI", false);
-		y.overrideMin = 19;
-		y.overrideMax = 31;
-		y.title = "BMI";
-		
-        var s = myChart.addSeries(["Name","BMI Rating", "Handedness"], dimple.plot.bubble);
-		
-		myChart.assignColor("Left", "#66C2A5");
-		myChart.assignColor("Both", "#FC8D62");
-		myChart.assignColor("Right", "#8DA0CB");
-		
-		var myLegend = myChart.addLegend(230, 20, 300, 10, "Right");
-        myChart.draw();
-
-		
-		//This orphans the legend from the graph updates to 
-		//keep it from resetting the choice
-		myChart.legends = [];
-		
-		//Create block for legend title
-		svg.selectAll("title-text")
-			.data(["Click boxes to show/hide handedness:"])
-			.enter()
-			.append("text")
-			.attr("x", 325)
-			.attr("y", 12)
-			.text(function (d) { return d; });
-		
-		
-		//Get Handedness values for filtering
-		var filterValues = dimple.getUniqueValues(data, "Handedness");
-		//var filterValues = ["Left", "Both", "Right"];
-		
-		//Get all the rects from the legend
-		myLegend.shapes.selectAll("rect")
-		
-			//Add a click event to each rect in the legend
+			var x = myChart.addMeasureAxis("x", "HR");
+			x.addOrderRule("HR", false);
+			x.overrideMin = 50;	
+			x.tickvalues = 50;
+			x.title = "Player Number of Home Runs";
+			
+			var y = myChart.addMeasureAxis("y", "BMI");
+			y.addOrderRule("BMI", false);
+			y.overrideMin = 19;
+			y.overrideMax = 31;
+			y.title = "BMI";
+			
+			var s = myChart.addSeries(["Name","BMI Rating", "Handedness"], dimple.plot.bubble);
+			
+			myChart.assignColor("Left", "#66C2A5");
+			myChart.assignColor("Both", "#FC8D62");
+			myChart.assignColor("Right", "#8DA0CB");
+			
+			var myLegend = myChart.addLegend(230, 20, 300, 10, "Right");
+			myChart.draw();
+			
+			//This orphans the legend from the graph updates to keep it from resetting the choice
+			myChart.legends = [];
+			
+			//Create block for legend title
+			svg.selectAll("title-text")
+				.data(["Click boxes to show/hide handedness:"])
+				.enter()
+				.append("text")
+				.attr("x", 325)
+				.attr("y", 12)
+				.text(function (d) { return d; });		
+			
+			//Get Handedness values for filtering
+			var filterValues = dimple.getUniqueValues(data, "Handedness");
+			
+			//Get all the rects from the legend
+			myLegend.shapes.selectAll("rect")
+			
+				//Add a click event to each rect in the legend
 			.on("click", function (e) {
-			var hide = false;
-			var newFilters = [];
-			
-			filterValues.forEach(function (f) {
-				if (f === e.aggField.slice(-1)[0]) {
-					hide = true;
+				var hide = false;
+				var newFilters = [];
+				
+				filterValues.forEach(function (f) {
+					if (f === e.aggField.slice(-1)[0]) {
+						hide = true;
+					} else {
+						newFilters.push(f);
+					}
+				});
+				if (hide) {
+					d3.select(this).style("opacity", 0.2);
 				} else {
-					newFilters.push(f);
+					newFilters.push(e.aggField.slice(-1)[0]);
+					d3.select(this).style("opacity", 0.8);
 				}
-			});
-			if (hide) {
-				d3.select(this).style("opacity", 0.2);
-			} else {
-				newFilters.push(e.aggField.slice(-1)[0]);
-				d3.select(this).style("opacity", 0.8);
-			}
-			//Update the filters
-			filterValues = newFilters;
-			
-			//Filter the data
-			myChart.data = dimple.filterData(data, "Handedness", filterValues);
-			
-			myChart.draw(800)
-			});
-			
-
-		};
+				
+				//Update the filters
+				filterValues = newFilters;
+				
+				//Filter the data
+				myChart.data = dimple.filterData(data, "Handedness", filterValues);
+				
+				myChart.draw(800)
+				});
+				
+			};
 		
     </script>
 </head>
@@ -136,7 +131,8 @@
 	<p>Is there a certain height and weight combination that correlates to having a large number 
 	of home runs over the course of your baseball career?  The visualization below shows the BMI 
 	versus home run record for baseball players with at least 50 or more career home runs.
-	<br></br>
+	<p>
+	</p>
 	From this chart we can see that there appears to be a certain BMI range which describes
 	those players with the highest number of career home runs.  Looking at the data below we
 	see that a BMI rating between 24 and 26 includes those players with the most home runs.
@@ -144,8 +140,8 @@
 	lowest level of the Overweight BMI range.  Since BMI can come in high when you are either
 	overweight or highly muscular it is hard to say which applies these players. We would need
 	additional information to determine why this range includes these players.
-	
-	
+	</p>
+	<p>
 	<ul>
 	<li>Each bubble in the chart represents an individual player</li>
 	<li>Bubble is color coded based on the handedness (left/right/both) of the player</li>
@@ -154,15 +150,14 @@
 	
 	
 	
-    <script type="text/javascript">
-    /*
-    Use D3 (not dimple.js) to load the TSV file
-    and pass the contents of it to the draw function
-    */
+	<script type="text/javascript">
+	 /*
+	 Use D3 (not dimple.js) to load the TSV file
+	 and pass the contents of it to the draw function
+	 */
 	
-    d3.csv("data/Baseball_data_updated.csv", draw);
-    </script
-	<br></br>
+	 d3.csv("data/Baseball_data_updated_final.csv", draw);
+	 </script>
 
 </body>
 </html>
